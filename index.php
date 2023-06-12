@@ -11,8 +11,19 @@
 </header>
 <main>
     <?php
-    require_once 'php/Connect.php';
-    printData();
+    require_once 'php/database.php';
+    $stmt = $db->prepare("SELECT * FROM article");
+    $stmt->execute();
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($rows as $row) {
+        echo "<section>
+            <img width='700px' src=\"img/".$row['title'].".jpg\" alt=\"".$row['title']."\">
+            <h2>".$row['title']."</h2>
+            <p>".$row['description']."</p>
+            <p><span>Data dodania: </span>".$row['date']."</p>
+            </section>";
+    }
     ?>
 </main>
 <script src="scripts/script.js"></script>
